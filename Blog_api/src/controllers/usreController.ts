@@ -7,7 +7,8 @@ import config, { has } from 'config';
 import { PostModel } from '../models/Post.model';
 
 export async function UserSaveController(req: Request, res: Response, next: NextFunction){
-    let isUser = await IsUserServices({ email: req.body.email });
+    try {
+         let isUser = await IsUserServices({ email: req.body.email });
 
 
     if (isUser) {
@@ -21,16 +22,16 @@ export async function UserSaveController(req: Request, res: Response, next: Next
         res.status(500).json({con:false,msg:"Can't save that user"})
     }
     }
-
-    
-
+    } catch (e: any) {
+        return res.status(500).send({ con: false, msg: `${e}` });
+}    
 }
 
 
 export async function UserLoginController(req: Request, res: Response, next: NextFunction) {
 
-
-    let isUser = await IsUserServices({ username: req.body.username });
+    try {
+      let isUser = await IsUserServices({ username: req.body.username });
 
     if (isUser) {
         let isSame = await isUser.comparePassword(req.body.password);
@@ -51,12 +52,14 @@ export async function UserLoginController(req: Request, res: Response, next: Nex
     } else {
         return res.status(404).json({con:false,msg:"User is not found email or password is something wrong"})
     }
-    
+} catch (e: any) {
+        return res.status(500).send({ con: false, msg: `${e}` });
+}        
 }
 
 export async function UserUpdateController(req: Request, res: Response, next: NextFunction) {
-    
-    let isUser = await IsUserWithId(req.params.id);
+    try {
+         let isUser = await IsUserWithId(req.params.id);
      
 
 
@@ -85,11 +88,14 @@ export async function UserUpdateController(req: Request, res: Response, next: Ne
     } else {
         return res.status(404).send({ con: false, msg: "User with that Id is not" });
     }
+    } catch (e: any) {
+        return res.status(500).send({ con: false, msg: `${e}` });
+}    
 
 }
 
 export async function UserDeleteController(req: Request, res: Response, next: NextFunction) {
-
+    try {
     let isUser = await IsUserWithId(req.params.id);
      
     
@@ -110,11 +116,14 @@ export async function UserDeleteController(req: Request, res: Response, next: Ne
     } else {
         return res.status(404).send({ con: false, msg: "User with that Id is not" });
     }
-
+} catch (e: any) {
+        return res.status(500).send({ con: false, msg: `${e}` });
+}    
 }
 
 export async function UserGetController(req: Request, res: Response, next: NextFunction) {
-    let isUser = await IsUserWithId(req.params.id);
+    try {
+       let isUser = await IsUserWithId(req.params.id);
     
     if (isUser) {
 
@@ -123,5 +132,9 @@ export async function UserGetController(req: Request, res: Response, next: NextF
     } else {
          return res.status(404).send({ con: false, msg: "User with that Id is not" });
     }
+   } catch (e: any) {
+        return res.status(500).send({ con: false, msg: `${e}` });
+}    
+   
 }
 

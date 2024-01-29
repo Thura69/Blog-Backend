@@ -1,11 +1,11 @@
 import { PostModel } from './../models/Post.model';
- import { Express } from 'express';
+ import { Express, Router } from 'express';
 import { GetAllController, GetOneController, PostCreateController, PostDeleteController, PostUpdateController } from '../controllers/postController';
 import { ValidateResource } from '../middlewares/ValidateResource';
 import { PostGetOneSchema, PostSchema, PostUpdateSchema } from '../schema/post.schema';
 import { SaveSingleFile } from '../utils/gallery';
 
-export function PostsRoute(app: Express) {
+export function PostsRoute(app: Router) {
  
 /**
  * @openapi

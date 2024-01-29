@@ -1,10 +1,10 @@
 import { UserUpdateSchema, UserGetSchema } from './../schema/user.schema';
-import { Express } from 'express';
+import { Express, Router } from 'express';
 import { UserDeleteController, UserGetController, UserLoginController, UserSaveController, UserUpdateController } from '../controllers/usreController';
 import { ValidateResource } from '../middlewares/ValidateResource';
 import { UserLoginSchema, UserSchema } from '../schema/user.schema';
 
-export function UsersRoute(app: Express) {
+export function UsersRoute(app: Router) {
   
   //Register
   /**

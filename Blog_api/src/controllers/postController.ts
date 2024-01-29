@@ -4,10 +4,8 @@ import { Result } from 'express-validator';
 
 
 export async function PostCreateController(req: Request, res: Response, next: NextFunction) {
-      
-    console.log(req.body);
-
-    let isTitle = await PostModel.findOne({ title: req.body.title });
+    try {
+            let isTitle = await PostModel.findOne({ title: req.body.title });
 
     if (isTitle) {
         return res.status(400).send({ con: false, msg: "Your title is already existed" });
@@ -20,10 +18,14 @@ export async function PostCreateController(req: Request, res: Response, next: Ne
     } else {
         return res.status(400).send({con:false,msg:"Your Post is not save"})
     }
+       } catch (e: any) {
+        return res.status(500).send({ con: false, msg: `${e}` });
+}    
 }
 
 export async function PostUpdateController(req: Request, res: Response, next: NextFunction) {
-    let isPost = await PostModel.findById(req.params.id);
+    try {
+       let isPost = await PostModel.findById(req.params.id);
     if (isPost) {
     
         if (isPost.id === req.params.id) {
@@ -50,16 +52,18 @@ export async function PostUpdateController(req: Request, res: Response, next: Ne
     }
         
     }
+  } catch (e: any) {
+        return res.status(500).send({ con: false, msg: `${e}` });
+}    
 }
 
 export async function PostDeleteController(req: Request, res: Response, next: NextFunction) {
-    let isPost = await PostModel.findById(req.params.id);
+    try {
+       let isPost = await PostModel.findById(req.params.id);
     
-    console.log(isPost);
 
     if (isPost) {
 
-        console.log(isPost);
     
         if (isPost.id === req.params.id) {
           
@@ -76,20 +80,29 @@ export async function PostDeleteController(req: Request, res: Response, next: Ne
     }
         
     }
+  } catch (e: any) {
+        return res.status(500).send({ con: false, msg: `${e}` });
+}    
 }
 
 export async function GetOneController(req: Request, res: Response, next: NextFunction) {
-    let isPost = await PostModel.findById(req.params.id);
+    try {
+       let isPost = await PostModel.findById(req.params.id);
     
     if (isPost) {
         return res.status(200).send({ con: true, msg: "Post with that id is here", result:isPost},)
     }
 
     return res.status(404).send({con:false,msg:"Post with that id is not found"})
+   } catch (e: any) {
+        return res.status(500).send({ con: false, msg: `${e}` });
+}    
+    
 }
 
 export async function GetAllController(req: Request, res: Response, next: NextFunction) {
-    const username = req.query.user;
+    try {
+        const username = req.query.user;
     const catName = req.query.cat;
 
     let posts:any;
@@ -106,5 +119,9 @@ export async function GetAllController(req: Request, res: Response, next: NextFu
     }
 
     return res.status(200).send({ con: true, msg: "Here is all of your posts", result: posts });
+   } catch (e: any) {
+        return res.status(500).send({ con: false, msg: `${e}` });
+}    
+   
 
 }

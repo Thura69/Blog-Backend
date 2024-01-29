@@ -1,9 +1,9 @@
 import { CreateCategorySchema } from './../schema/category.schema';
 import { ValidateResource } from './../middlewares/ValidateResource';
- import { Express } from 'express';
+ import { Express, Router } from 'express';
 import { GetAllCategoriesController, PostCategoryController } from '../controllers/categoryController';
 
-export function CategoriesRoute(app: Express) {
+export function CategoriesRoute(app: Router) {
     /**
      * @openapi
      *   /category:

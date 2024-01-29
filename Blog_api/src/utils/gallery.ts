@@ -4,9 +4,6 @@ import fileUpload from 'express-fileupload';
 
 export async function SaveSingleFile(req: Request, res: Response, next: NextFunction) {
     
-
-
-
     let filename: any = req.files?.file;
     if (filename) {
         let fileMv = filename.mv;
